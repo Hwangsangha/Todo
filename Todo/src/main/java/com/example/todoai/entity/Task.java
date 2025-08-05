@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity	//jpa 엔티티이며 DB테이블로 매핑됨
-@Table(name = "task") //테이블명 명시
+@Table(name = "tasks") //테이블명 명시
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

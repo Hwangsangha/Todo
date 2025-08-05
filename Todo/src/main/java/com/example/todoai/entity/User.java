@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity	//JPA 엔티티 클래스임을 
-@Table(name = "usrs")	// 테이블 이름 지정
+@Table(name = "users")	// 테이블 이름 지정
 @Getter @Setter
 @NoArgsConstructor	//기본 생성자 자동생성
 @AllArgsConstructor	//모든 필드 포함 생성자 자동생성
