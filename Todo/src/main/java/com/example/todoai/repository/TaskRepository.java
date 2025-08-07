@@ -1,9 +1,7 @@
 package com.example.todoai.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.example.todoai.entity.Task;
 
 //Task엔티티에 대한 DB접근을 처리하는 JpaRepository
