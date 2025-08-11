@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.todoai.common.ResourceNotFoundException;
 import com.example.todoai.entity.Task;
 import com.example.todoai.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +21,19 @@ public class TaskService {
 		
 		//taskid 객체 조회 - 없으면 null
 		public Task getTask(Long id) {
-			return taskRepository.findById(id).orElse(null);
+			return taskRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("할 일을 잦을 수 없습니다. id=" + id));
 		}
 		
 		//task 수정
 		public Task updateTask(Long id, Task updatedTask) {
-			Task task = taskRepository.findById(id).orElse(null);
-			if(task != null) {
+			Task task = taskRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("할 일을 찾을 수 없습니다. id=" + id));
 				task.setTitle(updatedTask.getTitle());
 				task.setDescription(updatedTask.getDescription());
 				task.setPriority(updatedTask.getPriority());
 				task.setStatus(updatedTask.getStatus());
 				return taskRepository.save(task);
-			}
-			return null;
 		}
 		
 		//taskId 삭제
