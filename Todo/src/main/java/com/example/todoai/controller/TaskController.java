@@ -30,7 +30,7 @@ public class TaskController {
 	private final UserService userService;	//사용자 로직 처리 서비스
 	
 	@PostMapping	//HTTP POST 요청 처리
-	public ResponseEntity<Task> create(@RequestParam Long userId, @RequestBody Task task){
+	public ResponseEntity<Task> create(@RequestParam("userId") Long userId, @RequestBody Task task){
 		User owner = userService.getUser(userId);	//사용자 조회
 		task.setUser(owner);						//연관관계 주입
 		Task created = taskService.createdTask(task);	//저장
@@ -40,24 +40,24 @@ public class TaskController {
 	}
 	
 	@GetMapping("/{id}")	// /api/tasks/1
-	public ResponseEntity<Task> get(@PathVariable Long id){
+	public ResponseEntity<Task> get(@PathVariable("id") Long id){
 		return ResponseEntity.ok(taskService.getTask(id));	//HTTP 200 + Task JSON
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task){
+	public ResponseEntity<Task> update(@PathVariable("id") Long id, @RequestBody Task task){
 		return ResponseEntity.ok(taskService.updateTask(id, task));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable("id") Long id){
 		taskService.deleteTask(id);
 		return ResponseEntity.noContent().build();	//HTTP 204(본문없음)
 	}
 	
 	//특정 사용자 Task 목록 조회
 	@GetMapping
-	public ResponseEntity<List<Task>> listByUser(@RequestParam Long userId){
+	public ResponseEntity<List<Task>> listByUser(@RequestParam("userId") Long userId){
 		return ResponseEntity.ok(taskService.getTasksByUser(userId));
 	}
 }
