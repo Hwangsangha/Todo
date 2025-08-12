@@ -3,6 +3,7 @@ package com.example.todoai.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,8 +34,8 @@ public class Task {
 	private Long id;
 	
 	//User와 다대일(N:1) 관계 - 한 명의 사용자가 여러 개의 할 일을 가질 수 있음
-	@ManyToOne(fetch = FetchType.LAZY) // 지연 로딩(성능 최적화)
-	@JoinColumn(name = "user_id",  nullable = false)	//FK설정
+	@ManyToOne(fetch = FetchType.EAGER) // 지연 로딩(성능 최적화)
+	@JoinColumn(name = "user_id")	//FK설정
 	private User user;
 	
 	@Column(nullable = false)

@@ -21,8 +21,13 @@ public class TaskService {
 		
 		//taskid 객체 조회 - 없으면 null
 		public Task getTask(Long id) {
-			return taskRepository.findById(id)
+			Task task = taskRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("할 일을 잦을 수 없습니다. id=" + id));
+			
+			if(task.getUser() != null) {
+				task.getUser().getUsername();	// DB에서 실제 User 데이터 로딩
+			}
+			return task;
 		}
 		
 		//task 수정
