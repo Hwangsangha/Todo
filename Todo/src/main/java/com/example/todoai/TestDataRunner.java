@@ -23,35 +23,38 @@ public class TestDataRunner {
 	@PostConstruct	//이 메서드는 스프링 컨테이너가 빈 초기화한 후 자동 실행
 	public void init() {
 		
-		try {
-			//사용자 생성
-			System.out.println("사용자 생성시작");
-			User user = new User();
-			user.setUsername("testuser");
-			user.setEmail("test@example.com");
-			user.setPassword("1234");
-			User saveUser = userService.creatUser(user);
-			
-			//우선순위/상태 테스트 데이터
-			System.out.println("Enum 값 지정");
-			Priority priority = Priority.HIGH;
-			Status status = Status.TODO;
-			
-			//할일 생성
-			System.out.println("할 일 생성 시작");
-			Task task = new Task();
-			task.setTitle("할 일 예시");
-			task.setDescription("예시 설명입니다.");
-			task.setUser(saveUser);
-			task.setPriority(priority);
-			task.setStatus(status);
-			
-			taskService.createdTask(task);
-			System.out.println("테스트 데이터 생성 완료");
-			
-		} catch(Exception e) {
-			System.err.println("PostConstruct 실행 중 에러 발생:");
-			e.printStackTrace();
+		for(int i=1; i<3; i++) {
+			try {
+				//사용자 생성
+				System.out.println("사용자 생성시작");
+				User user = new User();
+				user.setUsername("testuser"+i);
+				user.setEmail("test"+i+"@example.com");
+				user.setPassword("1234");
+				User saveUser = userService.creatUser(user);
+				
+				//우선순위/상태 테스트 데이터
+				System.out.println("Enum 값 지정");
+				Priority priority = Priority.HIGH;
+				Status status = Status.TODO;
+				
+				//할일 생성
+				System.out.println("할 일 생성 시작");
+				Task task = new Task();
+				task.setTitle("할 일 예시"+i);
+				task.setDescription("예시 설명입니다."+i);
+				task.setUser(saveUser);
+				task.setPriority(priority);
+				task.setStatus(status);
+				
+				taskService.createdTask(task);
+				System.out.println("테스트 데이터 생성 완료");
+				
+			} catch(Exception e) {
+				System.err.println("PostConstruct 실행 중 에러 발생:");
+				e.printStackTrace();
+			}
 		}
+		
 	}
 }
