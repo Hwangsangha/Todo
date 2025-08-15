@@ -29,6 +29,7 @@ public class TaskController {
 	private final TaskService taskService;	//할 일 로직 처리 서비스
 	private final UserService userService;	//사용자 로직 처리 서비스
 	
+	//할일 생성
 	@PostMapping	//HTTP POST 요청 처리
 	public ResponseEntity<Task> create(@RequestParam("userId") Long userId, @RequestBody Task task){
 		User owner = userService.getUser(userId);	//사용자 조회
@@ -39,23 +40,26 @@ public class TaskController {
 				.body(created);	//저장된 Task JSON 반환
 	}
 	
+	//특정 할일 조회
 	@GetMapping("/{id}")	// /api/tasks/1
 	public ResponseEntity<Task> get(@PathVariable("id") Long id){
 		return ResponseEntity.ok(taskService.getTask(id));	//HTTP 200 + Task JSON
 	}
 	
+	//할일 수정
 	@PutMapping("/{id}")
 	public ResponseEntity<Task> update(@PathVariable("id") Long id, @RequestBody Task task){
 		return ResponseEntity.ok(taskService.updateTask(id, task));
 	}
 	
+	//할일 삭제
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id){
 		taskService.deleteTask(id);
 		return ResponseEntity.noContent().build();	//HTTP 204(본문없음)
 	}
 	
-	//특정 사용자 Task 목록 조회
+	//전체 Task 목록 조회
 	@GetMapping
 	public ResponseEntity<List<Task>> listByUser(@RequestParam("userId") Long userId){
 		return ResponseEntity.ok(taskService.getTasksByUser(userId));
