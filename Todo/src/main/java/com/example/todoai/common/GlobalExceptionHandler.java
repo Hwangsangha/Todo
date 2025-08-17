@@ -61,10 +61,10 @@ public class GlobalExceptionHandler {
 		return build(HttpStatus.BAD_REQUEST, msg, req);
 	}
 	
-	//무결성 제약 위반 (NOT NULL, UNIQUE 등)
-	@ExceptionHandler(DataIntegrityViolationException.class)
+	//존재하지 않는 리소스 요청 시 404로 매핑
+	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handlNotFound(ResourceNotFoundException e, HttpServletRequest req){
-		return build(HttpStatus.NOT_FOUND, e.getMessage(), req);
+		return build(HttpStatus.NOT_FOUND, e.getMessage(), req);	//공통 빌더로 404 응답 생성
 	}
 	
 	//그 외 예기치 못한 예외(맨 마지막 안전망)
