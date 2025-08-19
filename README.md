@@ -21,7 +21,7 @@
 - 응답: 엔티티(Task) 직접 반환  
 - 문제: 엔티티 필드 직접 노출, 유효성 검증 없음  
 
-![과정 - POST]<img width="827" height="403" alt="post-tasks-userid1 (3)" src="https://github.com/user-attachments/assets/f82a1f94-d8cd-41d1-a9b2-ceef11140c84" />
+![과정 - POST](./image/중간과정api테스트/post_tasks_uesrid_(2).png)
 
 
 
@@ -30,7 +30,7 @@
 - 응답: `TaskResponse` DTO 반환  
 - 개선: 잘못된 입력 차단, 엔티티 노출 제거  
 
-![최종 - POST](./image/최종api테스트/after_post-task-userId1 (4))
+![최종 - POST](./image/최종api테스트/after_post_task_userid_(3).png)
 
 ---
 
