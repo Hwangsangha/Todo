@@ -30,7 +30,7 @@
 - 응답: `TaskResponse` DTO 반환  
 - 개선: 잘못된 입력 차단, 엔티티 노출 제거  
 
-![최종 - POST](./image/최종api테스트/after_post.png)
+![최종 - POST](./image/최종api테스트/after_post-task-userId1 (4))
 
 ---
 
