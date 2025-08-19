@@ -21,14 +21,14 @@
 - 응답: 엔티티(Task) 직접 반환  
 - 문제: 엔티티 필드 직접 노출, 유효성 검증 없음  
 
-![과정 - POST](images/post-tasks-userid1 (1))
+![과정 - POST](./images/중간과정api테스트/post-tasks-userid1 (1))
 
 #### After
 - 요청: `TaskCreateRequest` DTO + `@Valid` 검증  
 - 응답: `TaskResponse` DTO 반환  
 - 개선: 잘못된 입력 차단, 엔티티 노출 제거  
 
-![최종 - POST](images/after_post.png)
+![최종 - POST](./images/최종api테스트/after_post.png)
 
 ---
 
