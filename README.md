@@ -21,7 +21,8 @@
 - 응답: 엔티티(Task) 직접 반환  
 - 문제: 엔티티 필드 직접 노출, 유효성 검증 없음  
 
-![과정 - POST](./image/중간과정api테스트/post-tasks-userid1 (2).png)
+![과정 - POST]<img width="738" height="62" alt="post-tasks-userid1 (2)" src="https://github.com/user-attachments/assets/4fe7a82e-dd1b-46ae-bff1-8dce17462286" />
+
 
 #### After
 - 요청: `TaskCreateRequest` DTO + `@Valid` 검증  
