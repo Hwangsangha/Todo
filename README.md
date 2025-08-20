@@ -38,15 +38,8 @@
 
 ### 🔹 (2) 단일 조회 API (GET /api/tasks/{id})
 
-- **Before**: 엔티티(Task) 직접 반환    
-
-![과정 - GET](Todo/image/midTest/get_tasks_userid1_(2).png)
-![과정 - GET](Todo/image/midTest/get_tasks_userid1_(1).png)
-
-- **After**: `TaskResponse` DTO 반환
-
-![최종 - GET](Todo/image/after_get_user1task_userid1_(2).png)
-![최종 - GET](Todo/image/after_get_user1task_userid1_(1).png)
+![최종 - GET](Todo/image/finalTest/after_get_user1task_userid1_(2).png)
+![최종 - GET](Todo/image/finalTest/after_get_user1task_userid1_(1).png)
 
 ---
 
@@ -54,13 +47,13 @@
 
 - **Before**: 엔티티 리스트 직접 반환  
 
-![과정 - LIST](Todo/image/get_tasks_userid1_(2).png)
-![과정 - LIST](Todo/image/get_tasks_userid1_(1).png)
+![과정 - LIST](Todo/image/midTest/get_tasks_userid1_(2).png)
+![과정 - LIST](Todo/image/midTest/get_tasks_userid1_(1).png)
 
 - **After**: DTO 리스트 반환 (Stream 변환 적용)
 - 
-![최종 - LIST](Todo/image/after_get_task_userid1_(2).png)
-![최종 - LIST](Todo/image/after_get_task_userid1_(1).png)
+![최종 - LIST](Todo/image/finalTest/after_get_task_userid1_(2).png)
+![최종 - LIST](Todo/image/finalTest/after_get_task_userid1_(1).png)
 
 ---
 
@@ -68,14 +61,14 @@
 
 - **Before**: `PUT` + 엔티티 전체 교체 방식   
 
-![과정 - UPDATE](Todo/image/put_tasksuserid1_(2).png)
-![과정 - UPDATE](Todo/image/put_tasksuserid1_(3).png)
-![과정 - UPDATE](Todo/image/put_tasksuserid1_(1).png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(2).png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(3).png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(1).png)
 
 - **After**: `PATCH` + `TaskUpdateRequest` DTO 기반 부분 수정 + `204 No Content`
  
-![최종 - UPDATE](Todo/image/after_patch_task_userid1_(2).png)
-![최종 - UPDATE](Todo/image/after_patch_task_userid1_(1).png)
+![최종 - UPDATE](Todo/image/finalTest/after_patch_task_userid1_(2).png)
+![최종 - UPDATE](Todo/image/finalTest/after_patch_task_userid1_(1).png)
 
 ---
 
@@ -83,13 +76,14 @@
 
 - **Before**: `200 OK` + 엔티티 반환   
 
-![과정 - DELETE](Todo/image/delete_tasks3_userid1_(2).png)
-![과정 - DELETE](Todo/image/delete_tasks3_userid1_(3).png)
-![과정 - DELETE](Todo/image/delete_tasks3_userid1_(1).png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(2).png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(3).png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(1).png)
 
 - **After**: `204 No Content` + 전역 예외 처리 적용
 
-![최종 - DELETE](images/after_delete.png)
+![최종 - DELETE](Todo/image/finalTest/after_delete_task_taskid1_(2).png)
+![최종 - DELETE](Todo/image/finalTest/after_delete_task_taskid1_(1).png)
 
 ---
 
@@ -98,8 +92,8 @@
 - **Before**: 컨트롤러별 개별 처리, 일관성 부족  
 - **After**: `GlobalExceptionHandler` + `ErrorResponse` JSON 일관화  
 
-![과정 - ERROR](images/before_error.png)  
-![최종 - ERROR](images/after_error.png)
+![과정 - ERROR](Todo/image/finalTest/notexeptionmapping.png)  
+![최종 - ERROR](Todo/image/finalTest/after_post_validation_error.png)
 
 ---
 
