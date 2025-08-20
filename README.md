@@ -31,8 +31,8 @@
 - 응답: `TaskResponse` DTO 반환  
 - 개선: 잘못된 입력 차단, 엔티티 노출 제거  
 
-![최종 - POST](./image/finalTest/after_post_task_userid1_(3).png)
-![최종 - POST](./image/finalTest/after_post_task_userid1_(1).png)
+![최종 - POST](Todo/image/finalTest/after_post_task_userid1_(3).png)
+![최종 - POST](Todo/image/finalTest/after_post_task_userid1_(1).png)
 
 ---
 
