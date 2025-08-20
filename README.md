@@ -21,7 +21,8 @@
 - 응답: 엔티티(Task) 직접 반환  
 - 문제: 엔티티 필드 직접 노출, 유효성 검증 없음  
 
-![중간 - POST](https://github.com/Hwangsangha/Todo/blob/master/Todo/image/midTest/post_tasks_uesrid1_%20(1).png)
+![중간 - POST](Todo/image/midTest/post_tasks_uesrid1_(3).png)
+![중간 - POST](Todo/image/midTest/post_tasks_uesrid1_(1).png)
 
 
 
@@ -30,47 +31,59 @@
 - 응답: `TaskResponse` DTO 반환  
 - 개선: 잘못된 입력 차단, 엔티티 노출 제거  
 
-![최종 - POST](./image/finalTest/after_post_task_userid_(3).png)
+![최종 - POST](Todo/image/finalTest/after_post_task_userid1_(3).png)
+![최종 - POST](Todo/image/finalTest/after_post_task_userid1_(1).png)
 
 ---
 
 ### 🔹 (2) 단일 조회 API (GET /api/tasks/{id})
 
-- **Before**: 엔티티(Task) 직접 반환  
-- **After**: `TaskResponse` DTO 반환  
-
-![과정 - GET](images/before_get.png)  
-![최종 - GET](images/after_get.png)
+![최종 - GET](Todo/image/finalTest/after_get_user1task_userid1_(2).png)
+![최종 - GET](Todo/image/finalTest/after_get_user1task_userid1_(1).png)
 
 ---
 
 ### 🔹 (3) 목록 조회 API (GET /api/tasks?userId=...)
 
 - **Before**: 엔티티 리스트 직접 반환  
-- **After**: DTO 리스트 반환 (Stream 변환 적용)  
 
-![과정 - LIST](images/before_list.png)  
-![최종 - LIST](images/after_list.png)
+![과정 - LIST](Todo/image/midTest/get_tasks_userid1_(2).png)
+![과정 - LIST](Todo/image/midTest/get_tasks_userid1_(1).png)
+
+- **After**: DTO 리스트 반환 (Stream 변환 적용)
+- 
+![최종 - LIST](Todo/image/finalTest/after_get_task_userid1_(2).png)
+![최종 - LIST](Todo/image/finalTest/after_get_task_userid1_(1).png)
 
 ---
 
 ### 🔹 (4) 수정 API (PUT → PATCH)
 
-- **Before**: `PUT` + 엔티티 전체 교체 방식  
-- **After**: `PATCH` + `TaskUpdateRequest` DTO 기반 부분 수정 + `204 No Content`  
+- **Before**: `PUT` + 엔티티 전체 교체 방식   
 
-![과정 - UPDATE](images/before_update.png)  
-![최종 - UPDATE](images/after_update.png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(2).png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(3).png)
+![과정 - UPDATE](Todo/image/midTest/put_tasksuserid1_(1).png)
+
+- **After**: `PATCH` + `TaskUpdateRequest` DTO 기반 부분 수정 + `204 No Content`
+ 
+![최종 - UPDATE](Todo/image/finalTest/after_patch_task_userid1_(2).png)
+![최종 - UPDATE](Todo/image/finalTest/after_patch_task_userid1_(1).png)
 
 ---
 
 ### 🔹 (5) 삭제 API (DELETE /api/tasks/{id})
 
-- **Before**: `200 OK` + 엔티티 반환  
-- **After**: `204 No Content` + 전역 예외 처리 적용  
+- **Before**: `200 OK` + 엔티티 반환   
 
-![과정 - DELETE](images/before_delete.png)  
-![최종 - DELETE](images/after_delete.png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(2).png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(3).png)
+![과정 - DELETE](Todo/image/midTest/delete_tasks3_userid1_(1).png)
+
+- **After**: `204 No Content` + 전역 예외 처리 적용
+
+![최종 - DELETE](Todo/image/finalTest/after_delete_task_taskid1_(2).png)
+![최종 - DELETE](Todo/image/finalTest/after_delete_task_taskid1_(1).png)
 
 ---
 
@@ -79,8 +92,8 @@
 - **Before**: 컨트롤러별 개별 처리, 일관성 부족  
 - **After**: `GlobalExceptionHandler` + `ErrorResponse` JSON 일관화  
 
-![과정 - ERROR](images/before_error.png)  
-![최종 - ERROR](images/after_error.png)
+![과정 - ERROR](Todo/image/finalTest/notexeptionmapping.png)  
+![최종 - ERROR](Todo/image/finalTest/after_post_validation_error.png)
 
 ---
 
@@ -90,15 +103,3 @@
 - ✅ **데이터 무결성**: DTO + @Valid 적용  
 - 🌐 **RESTful**: 상태 코드(201, 204 등) 일관화  
 - 🔧 **유지보수성**: 전역 예외 처리로 코드 중복 제거  
-- 📊 **문서화 효과**: Before → After 비교로 리팩터링 능력 강조  
-
----
-
-## 📌 4. 문서 활용 방법
-
-1. `images/` 폴더에 각 단계별 Postman 캡처 이미지를 넣는다.  
-   - 예: `before_post.png`, `after_post.png`  
-2. 이 Markdown 문서를 GitHub 레포에 `README.md`로 올린다.  
-3. 포트폴리오 제출 시 PDF로 변환해 활용할 수도 있다.  
-
----
