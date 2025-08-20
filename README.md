@@ -21,7 +21,7 @@
 - 응답: 엔티티(Task) 직접 반환  
 - 문제: 엔티티 필드 직접 노출, 유효성 검증 없음  
 
-![중간 - POST](Todo/image/midTest/post_tasks_uesrid1_ (1).png)
+![중간 - POST](./image/midTest/post_tasks_uesrid1_ (1).png)
 
 
 
