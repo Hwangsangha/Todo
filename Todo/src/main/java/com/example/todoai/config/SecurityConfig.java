@@ -1,16 +1,13 @@
 package com.example.todoai.config;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -30,30 +27,38 @@ public class SecurityConfig {
 
 	    return http.build();
 	}*/
+//	//목적: (개발용) 인메모리 사용자 1명 등록 > Postman에서 Basic Auth로 사용
+//	@Bean
+//	public UserDetailsService users() {
+//		UserDetails user = User.withUsername("testuser")
+//				.password("{noop}1234")
+//				.roles("USER")
+//				.build();
+//		return new InMemoryUserDetailsManager(user);
+//	}
 	
 	//목적: 모든 /api/** 요청은 인증 필요. (개발용) HTTP Basic 사용
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http.csrf(csrf -> csrf.disable())
-			.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(auth -> auth
-					.requestMatchers(HttpMethod.GET, "/actuator/**", "/").permitAll()
-					.requestMatchers("/api/**").authenticated()
-					.anyRequest().permitAll()
+		http.authorizeHttpRequests(a -> a
+					.requestMatchers("/", "/error", "/health", "/oauth2/**", "/login/**", "/login/oauth2/**").permitAll()
+					.anyRequest().authenticated()
 				)
-				.httpBasic(Customizer.withDefaults());
+				.oauth2Login(o -> o
+						.authorizationEndpoint(a -> a.baseUri("/oauth2/authorization"))
+						.loginPage("/oauth2/authorization/google"))
+				.logout(logout -> logout.logoutSuccessUrl("/"));
+		
+		http.csrf(c -> c.ignoringRequestMatchers("/oauth2/**", "/login/**", "/login/oauth2/**"));
+		
 		return http.build();
 	}
-	
-	//목적: (개발용) 인메모리 사용자 1명 등록 > Postman에서 Basic Auth로 사용
 	@Bean
-	public UserDetailsService users() {
-		UserDetails user = User.withUsername("testuser")
-				.password("{noop}1234")
-				.roles("USER")
-				.build();
-		return new InMemoryUserDetailsManager(user);
+	CommandLineRunner checkRegs(ClientRegistrationRepository repo) {
+	    return args -> {
+	        ((InMemoryClientRegistrationRepository) repo)
+	            .forEach(r -> System.out.println("OAUTH2 REG: " + r.getRegistrationId()));
+	    };
 	}
-	
-	
+
 }
