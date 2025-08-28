@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.FilterChainProxy;
@@ -41,7 +43,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(a -> a
-					.requestMatchers("/", "/error", "/health", "/oauth2/**", "/login/**", "/login/oauth2/**").permitAll()
+					.requestMatchers("/", "/error", "/health", "/oauth2/**", "/login/**", "/login/oauth2/**","/auth/**", "/h2-console/**").permitAll()
 					.anyRequest().authenticated()
 				)
 				.oauth2Login(o -> o
@@ -49,7 +51,7 @@ public class SecurityConfig {
 						.loginPage("/oauth2/authorization/google"))
 				.logout(logout -> logout.logoutSuccessUrl("/"));
 		
-		http.csrf(c -> c.ignoringRequestMatchers("/oauth2/**", "/login/**", "/login/oauth2/**"));
+		http.csrf(c -> c.ignoringRequestMatchers("/oauth2/**", "/login/**", "/login/oauth2/**", "/auth/**"));
 		
 		return http.build();
 	}
@@ -59,6 +61,13 @@ public class SecurityConfig {
 	        ((InMemoryClientRegistrationRepository) repo)
 	            .forEach(r -> System.out.println("OAUTH2 REG: " + r.getRegistrationId()));
 	    };
+	}
+	
+	//비밀먼호를 안전하게 저장하기 위한 해시 인코더
+	//회원가입 시 평문 비번을 절대 저장하지 않고, 해싱해서 저장
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }
