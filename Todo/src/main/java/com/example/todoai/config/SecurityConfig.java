@@ -51,8 +51,10 @@ public class SecurityConfig {
 						.loginPage("/oauth2/authorization/google"))
 				.logout(logout -> logout.logoutSuccessUrl("/"));
 		
-		http.csrf(c -> c.ignoringRequestMatchers("/oauth2/**", "/login/**", "/login/oauth2/**", "/auth/**"));
+		http.csrf(c -> c.ignoringRequestMatchers("/oauth2/**", "/login/**", "/login/oauth2/**", "/auth/**", "/h2-console/**"));
 		
+		//h2콘솔 사용 용도
+		http.headers(h -> h.frameOptions(f -> f.disable()));
 		return http.build();
 	}
 	@Bean
