@@ -46,10 +46,32 @@ public class JwtService {
 				.compact();														//빌더 종료. header.payload.signature문자열로 직렬화해서 반환.
 	}
 	
+	/**
+	 * RefreshToken 발급
+	 * - 유효기간이 길고, roles 같은 부가정보는 넣지 않는다.
+	 * - AccessToken 재발급 시 식별자 용도로만 사용.
+	 */
+	public String issueRefresh(String username) {
+	    Instant now = Instant.now();
+	    return Jwts.builder()
+	            .subject(username)                              // sub: 사용자 식별자
+	            .issuedAt(Date.from(now))                       // iat: 발급 시각
+	            .expiration(Date.from(now.plusSeconds(refreshExpSeconds))) // exp: 긴 만료시간
+	            .signWith(key, Jwts.SIG.HS256)                  // HS256 서명
+	            .compact();
+	}
+	
 	public Jws<Claims> parse(String token){
 		return Jwts.parser()				//Jwts: JWT헬퍼. parser() > 토큰 해석기 만들기 시작
 				.verifyWith(key)			//key: 토큰을 발급할 때 쓴 비밀키. 서명 검증용.
 				.build()					//빌더 완성.
 				.parseSignedClaims(token);	//토큰 문자열을 집어넣어 header.payload.signature풀고, 서명 검증 + 만료 검사까지
 	}
+	
+	/** 남은 유효시간(초). 디버그나 만료 임박 판단용 */
+    public long remainingSeconds(String token) {
+        Date exp = parse(token).getPayload().getExpiration();       // exp 읽기
+        long sec = (exp.getTime() - System.currentTimeMillis()) / 1000L;
+        return Math.max(sec, 0L);
+    }
 }

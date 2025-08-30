@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.todoai.security.JwtAuthFilter;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -40,10 +42,17 @@ public class SecurityConfig {
 //	}
 	
 	//목적: 모든 /api/** 요청은 인증 필요. (개발용) HTTP Basic 사용
+	
+	private final JwtAuthFilter jwtAuthFilter;
+	
+	public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+		this.jwtAuthFilter = jwtAuthFilter;
+	}
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(a -> a
-					.requestMatchers("/", "/error", "/health", "/oauth2/**", "/login/**", "/login/oauth2/**","/auth/**", "/h2-console/**").permitAll()
+					.requestMatchers("/", "/error", "/health", "/oauth2/**", "/login/**", "/login/oauth2/**","/auth/**","/auth/signup", "/h2-console/**").permitAll()
 					.anyRequest().authenticated()
 				)
 				.oauth2Login(o -> o
