@@ -9,8 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.todoai.security.JwtAuthFilter;
 
@@ -64,6 +64,10 @@ public class SecurityConfig {
 		
 		//h2콘솔 사용 용도
 		http.headers(h -> h.frameOptions(f -> f.disable()));
+		
+		//JWT 필터 등록(UsernamePasswordAuthenticationFilter 전에 실행)
+		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+		
 		return http.build();
 	}
 	@Bean
