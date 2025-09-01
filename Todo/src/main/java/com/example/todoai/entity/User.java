@@ -67,4 +67,11 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
 	}
+	
+	@Column(length = 512)
+	private String refreshToken;
+	
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
 }

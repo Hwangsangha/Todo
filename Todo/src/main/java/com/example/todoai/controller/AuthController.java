@@ -50,7 +50,7 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody @Validated SignupRequest req){
 		//중복체크 (DB인덱스도 있으니 이중 안전장치)
-		if(users.existsByUsername(req.userename())) {
+		if(users.existsByUsername(req.username())) {
 			return ResponseEntity.status(409).body(Map.of("error", "username_in_use"));
 		}
 		if(users.existsByEmail(req.email())) {
@@ -61,7 +61,7 @@ public class AuthController {
 		String hashed = encoder.encode(req.password());
 		
 		User u = User.builder()
-				.username(req.userename())
+				.username(req.username())
 				.email(req.email())
 				.password(hashed)
 				.role(Role.ROLE_USER)

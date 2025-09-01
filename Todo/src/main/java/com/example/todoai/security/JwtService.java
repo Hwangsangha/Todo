@@ -14,6 +14,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.Nullable;
 
 /**
  * JWT 발급/검증 전용 유틸.
@@ -40,6 +41,7 @@ public class JwtService {
 		return Jwts.builder()													//Jwts: JWT 유틸 패곹리. builder()로 토큰 만들기 시작.
 				.subject(username)												//sub: 표준 클레임. 토큰 주체(로그인 아이디)
 				.claim("roles", roles)											//커스텀 클레임. 정해놓은 키로 권한 목록을 넣는다.
+				.claim("typ", "access")
 				.issuedAt(Date.from(now))										//iat: 발급 시각. 언제 만들었는지 기록.
 				.expiration(Date.from(now.plusSeconds(accessExpSeconds)))		//exp: 만료 시각. 만료되면 토큰 무효.
 				.signWith(key, Jwts.SIG.HS256)									//서명: 비밀키+알고리즘(HS256)으로 서명 붙이기.
@@ -55,6 +57,7 @@ public class JwtService {
 	    Instant now = Instant.now();
 	    return Jwts.builder()
 	            .subject(username)                              // sub: 사용자 식별자
+	            .claim("typ", "access")
 	            .issuedAt(Date.from(now))                       // iat: 발급 시각
 	            .expiration(Date.from(now.plusSeconds(refreshExpSeconds))) // exp: 긴 만료시간
 	            .signWith(key, Jwts.SIG.HS256)                  // HS256 서명
@@ -66,6 +69,16 @@ public class JwtService {
 				.verifyWith(key)			//key: 토큰을 발급할 때 쓴 비밀키. 서명 검증용.
 				.build()					//빌더 완성.
 				.parseSignedClaims(token);	//토큰 문자열을 집어넣어 header.payload.signature풀고, 서명 검증 + 만료 검사까지
+	}
+	//만료여부
+	public boolean isExpired(Claims claims) {
+		return claims.getExpiration().before(new Date());
+	}
+	//typ 클레임 없으면 null
+	@Nullable
+	public String getTokenType(Claims claims) {
+		Object t = claims.get("typ");
+		return t == null ? null : t.toString();
 	}
 	
 	/** 남은 유효시간(초). 디버그나 만료 임박 판단용 */

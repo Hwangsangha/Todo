@@ -23,7 +23,7 @@ public class TestDataRunner {
 	@PostConstruct	//이 메서드는 스프링 컨테이너가 빈 초기화한 후 자동 실행
 	public void init() {
 		
-		for(int i=1; i<3; i++) {
+		for(int i=1; i<6; i++) {
 			try {
 				//사용자 생성
 				System.out.println("사용자 생성시작");

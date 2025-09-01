@@ -37,11 +37,14 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 		this.jwt = jwt;
 	}
 	
+	//특정 경로는 이 필터를 거치지 않게 제외
 	@Override
 	protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
 		String p = request.getRequestURI();
-		//필요시 공개 경로 추가
+		//공개/인증 관련/개발 편의 경로들
 		return p.startsWith("/auth/")
+				|| p.startsWith("/oauth2/")
+				|| p.startsWith("/login/")
 				|| p.startsWith("/h2-console/")
 				|| "OPTIONS".equalsIgnoreCase(request.getMethod());
 	}
